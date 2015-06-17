@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>MGApi - Maze Generator API</title>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='jquery-1.11.3.min.js') }}"></script>
+</head>
+<body>
+<center style="padding: 5px 0 5px 0; font-size: 40px">
+    Rendering <b style="color: darkred">MGApi</b> Generated Maze!
+</center>
+<hr>
+<center style="padding: 15px 0 0 0;">
+    <div id="mazePlaceHolder"></div>
+</center>
+</body>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        var maze = $.parseJSON('{{ maze_json|safe }}');
+        var maze_html = ''
+
+        maze_html += '<table style="border: 1px solid #000" cellpadding="0" cellspacing="0">';
+
+        $.each(maze, function(i, item) {
+            maze_html += '<tr id="mazeRow_' + i + '">';
+
+            $.each(item, function(i, wall) {
+                border_style = 'border: 1px solid #000;';
+
+
+                if(wall.N == 1)
+                    border_style += ' border-top: none;';
+
+                if(wall.S == 1)
+                    border_style += ' border-bottom: none;';
+
+                if(wall.W == 1)
+                    border_style += ' border-right: none;';
+
+                if(wall.E == 1)
+                    border_style += ' border-left: none;';
+
+                maze_html += '<td style="' + border_style + ' width: 10px; height: 10px;" id="mazeCell_' + i + '">';
+                maze_html += '</td>';
+            });
+
+            maze_html += '</tr>';
+        });
+
+        maze_html += '</table>';
+
+        $("#mazePlaceHolder").html(maze_html);
+    });
+</script>
+
+</html>
