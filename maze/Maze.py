@@ -13,6 +13,30 @@ class Maze:
         self.__width = width
         self.__height = height
 
+    @staticmethod
+    def createFromExistingMaze(maze_json):
+        maze = json.loads(maze_json)
+        width = len(maze[0])
+        height = len(maze)
+        new_maze = Maze(width, height)
+
+        for cell in new_maze.cells():
+            cell.setWallsDict(maze[cell.getY()][cell.getX()])
+
+        return new_maze
+
+    def getDimention(self):
+        return (self.__width, self.__height)
+
+    def getOriginOfMaze(self):
+        return self.__maze[0][0]
+
+    def getEndOfMaze(self):
+        return self.__maze[self.__height - 1][self.__width - 1]
+
+    def getCellAt(self, x, y):
+        return self.__maze[y][x]
+
     def getRandomOrigin(self):
         return self.__maze[random.randint(0, self.__height - 1)][random.randint(0, self.__width - 1)]
 
@@ -130,7 +154,7 @@ class Maze:
 
     def addEntryAndExitPoints(self):
         self.__maze[0][0].clearWall(Cell.NORTH_WALL)
-        self.__maze[self.__width - 1][self.__height - 1].clearWall(Cell.SOUTH_WALL)
+        self.__maze[self.__height - 1][self.__width - 1].clearWall(Cell.SOUTH_WALL)
 
     def getRaw(self):
         final_result = ""

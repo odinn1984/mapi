@@ -1,6 +1,9 @@
+from maze.Maze import Maze
+from maze.Solver import Solver
 from maze.Generator import Generator
 from maze.Strategy_RecursiveBacktracker import Strategy_RecursiveBacktracker
 from maze.Strategy_HuntAndKill import Strategy_HuntAndKill
+from maze.Strategy_RandomMouse import Strategy_RandomMouse
 from flask import Flask, render_template, abort, request
 from time import gmtime, strftime
 
@@ -37,9 +40,13 @@ def solveMaze():
     if request.method != 'POST':
         abort(400)
 
-    maze = json.loads(request.data)
+    maze = Maze.createFromExistingMaze(request.data)
+    solver = Solver(Strategy_RandomMouse(maze))
+    solver.solve()
 
-    return json.dumps([{"x": 1, "y": 2}])
+    print solver.getJSONPath()
+
+    return solver.getJSONPath()
 
 def mazeGeneratorFactory(width, height, algorith_type):
     maze_generator = None

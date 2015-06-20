@@ -1,5 +1,10 @@
 __all__ = [
+    'Maze',
     'IMazeGenerator',
+    'IMazeSolver',
     'Generator',
-    'Strategy_RecursiveBacktracker'
+    'Solver',
+    'Strategy_RecursiveBacktracker',
+    'Strategy_HuntAndKill',
+    'Strategy_RandomMouse'
 ]

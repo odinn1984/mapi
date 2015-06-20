@@ -35,6 +35,12 @@ class Cell:
     def getWallsDict(self):
         return self.__walls
 
+    def setWallsDict(self, walls):
+        self.__walls = walls
+
+    def hasWall(self, direction):
+        return False if direction in self.__walls.keys() and self.__walls[direction] == 1 else True
+
     def clearWall(self, wall):
         if wall not in self.__walls.keys():
             print '[%s - Error]: Invalid wall provided' % (strftime("%Y-%m-%d %H:%M:%S", gmtime()))

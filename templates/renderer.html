@@ -28,7 +28,7 @@
             maze_html += '<tr id="mazeRow_' + i + '">';
 
             $.each(item, function(i, wall) {
-                border_style = 'border: 1px solid #666;';
+                border_style = 'border: 2px solid #666;';
 
 
                 if(wall.N == 1)
@@ -59,15 +59,14 @@
 
             $.ajax({
                 url: '/maze/solve',
-                async: false,
+                async: true,
                 type: 'POST',
                 dataType: 'JSON',
                 contentType: 'application/json',
                 data: '{{ maze_json|safe }}',
                 success: function(data) {
-                    alert(data);
                     $.each(data, function(i, item) {
-                        $("#mazeRow_" + item.y + " > #mazeCell_" + item.x).css("background-color", "#00ee00");
+                        $("#mazeRow_" + item.y + " > #mazeCell_" + item.x).css("background-color", "#00ff00");
                     });
 
                     $('#solveme').html('( Solve Me! )');
