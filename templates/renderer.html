@@ -56,6 +56,9 @@
 
         $('#solveme').click(function(e) {
             $('#solveme').html('( Solving . . . )');
+            $('td[id*="mazeCell"]').each(function() {
+                $(this).css("background-color", "#fff");
+            });
 
             $.ajax({
                 url: '/maze/solve',
