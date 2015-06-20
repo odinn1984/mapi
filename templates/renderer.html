@@ -8,7 +8,8 @@
 </head>
 <body>
 <center style="padding: 5px 0 5px 0; font-size: 40px">
-    Rendering <b style="color: darkred">MGApi</b> Generated Maze!
+    Rendering <b style="color: darkred">MGApi</b> Generated Maze!<br />
+    <a id="solveme" style="font-size: 18px; font-weight: bold;" href="javascript:void(0);">( Solve Me! )</a>
 </center>
 <hr>
 <center style="padding: 15px 0 0 0;">
@@ -19,15 +20,15 @@
 <script type="text/javascript">
     $(document).ready(function() {
         var maze = $.parseJSON('{{ maze_json|safe }}');
-        var maze_html = ''
+        var maze_html = '';
 
-        maze_html += '<table style="border: 1px solid #000" cellpadding="0" cellspacing="0">';
+        maze_html += '<table id="mazeTable" style="border: none;" cellpadding="0" cellspacing="0">';
 
         $.each(maze, function(i, item) {
             maze_html += '<tr id="mazeRow_' + i + '">';
 
             $.each(item, function(i, wall) {
-                border_style = 'border: 1px solid #000;';
+                border_style = 'border: 1px solid #666;';
 
 
                 if(wall.N == 1)
@@ -51,7 +52,32 @@
 
         maze_html += '</table>';
 
-        $("#mazePlaceHolder").html(maze_html);
+        $('#mazePlaceHolder').html(maze_html);
+
+        $('#solveme').click(function(e) {
+            $('#solveme').html('( Solving . . . )');
+
+            $.ajax({
+                url: '/maze/solve',
+                async: false,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json',
+                data: '{{ maze_json|safe }}',
+                success: function(data) {
+                    alert(data);
+                    $.each(data, function(i, item) {
+                        $("#mazeRow_" + item.y + " > #mazeCell_" + item.x).css("background-color", "#00ee00");
+                    });
+
+                    $('#solveme').html('( Solve Me! )');
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr.responseText);
+                    $('#solveme').html('( Error! Retry? )');
+                }
+            });
+        });
     });
 </script>
 

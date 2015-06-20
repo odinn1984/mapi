@@ -22,6 +22,8 @@ class Strategy_HuntAndKill(IMazeGenerator):
             if current_cell is None:
                 have_more_cells_to_hunt = False
 
+        self.__maze.addEntryAndExitPoints()
+
     def huntForAvailableCell(self):
         for cell in self.__maze.cells():
             if self.__maze.hasUnvisitedNeightbours(cell):

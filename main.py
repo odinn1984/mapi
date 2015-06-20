@@ -1,10 +1,11 @@
 from maze.Generator import Generator
 from maze.Strategy_RecursiveBacktracker import Strategy_RecursiveBacktracker
 from maze.Strategy_HuntAndKill import Strategy_HuntAndKill
-from flask import Flask, render_template, abort
+from flask import Flask, render_template, abort, request
 from time import gmtime, strftime
 
 import optparse as op
+import json
 
 app = Flask(__name__)
 
@@ -30,6 +31,15 @@ def renderMaze(width=10, height=10, strategy='RecursiveBacktracker'):
     maze_json = maze_generator.getJSON()
 
     return render_template('renderer.html', maze_json=maze_json)
+
+@app.route('/maze/solve', methods=['POST'])
+def solveMaze():
+    if request.method != 'POST':
+        abort(400)
+
+    maze = json.loads(request.data)
+
+    return json.dumps([{"x": 1, "y": 2}])
 
 def mazeGeneratorFactory(width, height, algorith_type):
     maze_generator = None

@@ -23,6 +23,8 @@ class Strategy_RecursiveBacktracker(IMazeGenerator):
                 current_cell = self.__maze.getRandomUnvisitedCellr()
                 self.__maze.markVisitedCell(current_cell)
 
+        self.__maze.addEntryAndExitPoints()
+
     def getRaw(self):
         return self.__maze.getRaw()
 

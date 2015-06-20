@@ -128,6 +128,10 @@ class Maze:
             print '[%s - Error]: Invalid cell pair provided' % (strftime("%Y-%m-%d %H:%M:%S", gmtime()))
             raise Exception("Invalid cell pair provided")
 
+    def addEntryAndExitPoints(self):
+        self.__maze[0][0].clearWall(Cell.NORTH_WALL)
+        self.__maze[self.__width - 1][self.__height - 1].clearWall(Cell.SOUTH_WALL)
+
     def getRaw(self):
         final_result = ""
 
