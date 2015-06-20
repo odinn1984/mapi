@@ -13,7 +13,7 @@ class Maze:
         self.__width = width
         self.__height = height
 
-    def getOrigin(self):
+    def getRandomOrigin(self):
         return self.__maze[random.randint(0, self.__height - 1)][random.randint(0, self.__width - 1)]
 
     def hasUnvisitedCells(self):
@@ -34,11 +34,17 @@ class Maze:
 
         return False
 
-    def getRandomUnvisitedCellr(self):
+    def getRandomUnvisitedCell(self, removeFromList=True):
         unvisited_cells = self.__unvisited_cells
+
+        if len(unvisited_cells) == 0:
+            return None
+
         random.shuffle(unvisited_cells)
         unvisited_cell = unvisited_cells[0]
-        self.__unvisited_cells.remove(unvisited_cell)
+
+        if removeFromList:
+            self.__unvisited_cells.remove(unvisited_cell)
 
         return self.__maze[unvisited_cell[1]][unvisited_cell[0]]
 
@@ -64,6 +70,29 @@ class Maze:
             selected_neightbour = self.__maze[neightbour[1]][neightbour[0]]
 
         return selected_neightbour
+
+    def hasVisitedNeightbours(self, cell):
+        x = cell.getX()
+        y = cell.getY()
+        neightbours = [
+            (x - 1, y),
+            (x + 1, y),
+            (x, y - 1),
+            (x, y + 1)
+        ]
+        has_visited_neightbour = False
+
+        for neightbour in neightbours:
+            if neightbour[0] < 0 or neightbour[0] >= self.__width or neightbour[1] >= self.__height or neightbour[1] < 0:
+                continue
+
+            if self.__maze[neightbour[1]][neightbour[0]].visited() == False:
+                continue
+
+            if self.__maze[neightbour[1]][neightbour[0]].visited():
+                has_visited_neightbour = True
+
+        return has_visited_neightbour
 
     def markVisitedCell(self, cell):
         x = cell.getX()
@@ -124,3 +153,10 @@ class Maze:
             final_result.append(row_list)
 
         return json.dumps(final_result)
+
+    def cells(self):
+        for row in self.__maze:
+            for cell in row:
+                yield cell
+
+        return

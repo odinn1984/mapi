@@ -1,5 +1,6 @@
 from maze.Generator import Generator
 from maze.Strategy_RecursiveBacktracker import Strategy_RecursiveBacktracker
+from maze.Strategy_HuntAndKill import Strategy_HuntAndKill
 from flask import Flask, render_template, abort
 from time import gmtime, strftime
 
@@ -36,6 +37,8 @@ def mazeGeneratorFactory(width, height, algorith_type):
     try:
         if algorith_type == 'RecursiveBacktracker':
             maze_generator = Generator(Strategy_RecursiveBacktracker(int(width), int(height)))
+        elif algorith_type == 'HuntAndKill':
+            maze_generator = Generator(Strategy_HuntAndKill(int(width), int(height)))
         else:
             abort(404)
 
