@@ -35,6 +35,10 @@ def mazeGeneratorFactory(width, height, algorith_type):
     maze_generator = None
 
     try:
+        if int(width) <= 0 or int(height) <= 0:
+            print '[%s - Error]: %s' % (strftime("%Y-%m-%d %H:%M:%S", gmtime()), "width and height have to be > 0")
+            abort(400)
+
         if algorith_type == 'RecursiveBacktracker':
             maze_generator = Generator(Strategy_RecursiveBacktracker(int(width), int(height)))
         elif algorith_type == 'HuntAndKill':
