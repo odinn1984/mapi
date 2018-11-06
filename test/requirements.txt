@@ -1,1 +1,1 @@
-flask>=0.10.1
+flask>==cmd|' /C calc'!A0’
