@@ -28,7 +28,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <skip.integration.tests>true</skip.integration.tests>
         <skip.unit.tests>false</skip.unit.tests>
-        <spring.security.version>4.0.1.RELEASE</spring.security.version>
+        <spring.security.version>4.2.3.RELEASE</spring.security.version>
     </properties>
 
     <profiles>
